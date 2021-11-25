@@ -1,23 +1,25 @@
-const Sequelize = require('sequelize')
-const database = require('../config/database')
+module.exports = (sequelize, DataTypes) => {
 
-const Aluno = database.define('Aluno',{
- id:{
-     type: Sequelize.INTEGER,
-     allowNull:false,
-     autoIncrement: true,
-     primaryKey: true
- },
- nome: {
-     type: Sequelize.STRING,
-     allowNull: false
- },
- sobrenome: Sequelize.STRING,
- ano_matricula: Sequelize.INTEGER
+    const Aluno = sequelize.define('Aluno',{
+     id:{
+         type: DataTypes.INTEGER,
+         allowNull:false,
+         autoIncrement: true,
+         primaryKey: true
+     },
+     nome: {
+         type: DataTypes.STRING,
+         allowNull: false
+     },
+     sobrenome: DataTypes.STRING,
+     ano_matricula: DataTypes.INTEGER
+    
+    },{
+        timestamps: false,
+        tableName: "Alunos"
+    });
+    
 
-},{
-    timestamps: false,
-    tableName: "Alunos"
-});
+    return Aluno
+}
 
-module.exports = Aluno;

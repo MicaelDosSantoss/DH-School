@@ -1,17 +1,17 @@
 const express = require('express')
-
+const Sequelize = require('sequelize')
 const sequelize = require('./config/database')
-const Aluno = require('./Models/Aluno')
-
+const { Aluno } = require('./models')
+const db = require('./models')
+const router = require('./router/rotas')
 const app = express()
+const Op = Sequelize.Op
 
+app.use(router)
 
-app.use(express.json())
-
-app.use(express.static('public'))
 app.set('view engine',"ejs")
 
-sequelize
+db.sequelize
 .authenticate()
 .then(() => {
     console.log('Sucesso na conexão!')
@@ -19,24 +19,5 @@ sequelize
 .catch((err => {
     console.error('Erro de conexão:')
 }))
-
-app.get('/',(req,res) => {
-    res.send('Hello')
-})
-app.get('/alunos',async (req,res) => {
-    const alunos = await Aluno.findAll()
-    res.json(alunos)
-})
-app.get('/alunos/:id', async (req,res) => {
-    const {id} = req.params;
-    const aluno = await Aluno.findByPk(id)
-    res.json(aluno)
-}
-
-
-
-)
-
-
 
 app.listen(3000)
